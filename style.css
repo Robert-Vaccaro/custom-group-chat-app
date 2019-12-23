@@ -1,0 +1,103 @@
+.chatbox{
+    height: 350px;
+    overflow-y: scroll;
+    color: white;
+}
+
+.hidden{
+    display: none
+}
+
+body{
+
+    background-image: url("https://wallpaperaccess.com/full/32821.jpg");
+    background-color: #000000;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+::-webkit-scrollbar {
+    width: 6px;
+    background: rgba(136, 136, 136, 0)
+} 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0); 
+} 
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0); 
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background: rgba(136, 136, 136, 0); 
+  }
+  
+  
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(136, 136, 136, 0); 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(85, 85, 85, 0); 
+  }
+  
+  .rot-bu {
+    position: relative;
+    background: #7B6D8D;
+    width: 256px;
+    height: 64px;
+    line-height: 64px;
+    transition: all 0.3s;
+  
+  }
+  
+  .rot-bu::before, .rot-bu::after {
+    content: '';
+    position: absolute;
+    transition: all 0.3s;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  /* rot-bu TWO */
+.rot-bu-two::before, .rot-bu-two::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+      height: 100%;
+    bottom: 0;
+      left: 0;
+      z-index: 1;
+    transition: all 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  
+  .rot-bu-two:hover::after {
+    animation-name: rotatecw;
+    animation-duration: 2s;
+  }
+  .rot-bu-two:hover::before {
+    animation-name: rotateccw; 
+    animation-duration: 3s;
+  }
+  .rot-bu-two:hover::after, .rot-bu-two:hover::before {
+    left: 96px;
+    width: 64px;
+    
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  
+  @keyframes rotatecw {
+      from {transform: rotate(0deg);}
+      to {transform: rotate(360deg);}
+  }
+  
+  @keyframes rotateccw {
+      from {transform: rotate(0deg);}
+      to {transform: rotate(-360deg);}
+  }

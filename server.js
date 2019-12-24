@@ -16,7 +16,7 @@ var Message = mongoose.model('Message',{
   message : String,
 })
 app.get("/", ()=>{
-  console.log("hello")
+  console.log("hello world")
 })
 var dbUrl = process.env.KEY;
 
@@ -26,10 +26,19 @@ app.get('/messages', (req, res) => {
   })
 })
 
-app.get("/delete", (req, res) => {
+app.get("/delete", (req,res)=>{
+  res.sendFile(__dirname + '/delete.html');
+})
+
+app.post("/deletemessages", (req, res) => {
+  pw = {pw:req.body.pw};
+  if (pw.pw == process.env.PW){
   mongoose.connection.db.dropCollection('messages', function(err, result) {
-    res.send(result);
+    res.sendFile(__dirname + '/index.html');
   });
+} else {
+  console.log("wrong1")
+}
 })
 
 

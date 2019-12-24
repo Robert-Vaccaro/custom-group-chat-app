@@ -101,3 +101,20 @@ body{
       from {transform: rotate(0deg);}
       to {transform: rotate(-360deg);}
   }
+
+  .initial{
+    padding-top: 100px;
+    margin: auto;
+    text-align: center;
+    width: 400px;
+  }
+
+  .delete-form{
+    padding-top: 100px;
+    margin: auto;
+    text-align: center;
+    width: 400px;
+  }
+  .del{
+    text-align: center;
+  }

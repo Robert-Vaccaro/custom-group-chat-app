@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>group-chat-app</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="jquery.toast.css">
+  <script src="jquery.toast.js"></script>
+</head>
+<body>
+    <div class='delete-form'>
+        <form action="/deletemessages" method="post">    
+            <br>
+            <p style="color: white;">Password: <input type="password" name= 'pw' class='pw'></input></p>
+            
+            <button id="coolio" type= "submit" class="cool2 rot-bu rot-bu-two">Delete</button>
+        </form>
+
+</div>
+<script>
+$(".cool2").click(() => {
+        deleteMessages2()
+        if (deleteMessages2() !== 'wrong1'){
+            $.toast({
+                heading: 'Error',
+                text: 'Wrong',
+                showHideTransition: 'fade',
+                icon: 'error'
+            })
+        } else {
+            console.log("finished")
+        }
+    })
+function sendMessage2(message) {
+    $.post('/messages', message)
+
+}
+function deleteMessages2() {
+    $.get('/deletemesesages')
+}
+function submitPoll2() {
+    document.getElementById("coolio").disabled = true;
+    setTimeout(function() {
+        document.getElementById("coolio").disabled = false;
+    }, 2000);
+}
+</script>
+</body>
+</html>

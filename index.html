@@ -9,6 +9,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="script.js"></script>
+  <link rel="stylesheet" href="jquery.toast.css">
+  <script src="jquery.toast.js"></script>
 </head>
 <body>
   <div class="initial">  
@@ -28,12 +30,13 @@
         <h1 class="display-4">Send Message</h1>
         <br>
 
-        <textarea id = "message" class="form-control" placeholder="Your Message Here"></textarea>
+        <textarea id = "message" class="form-control" placeholder="Enter Your Message Here. Press Enter or the 'Send' button when done."></textarea>
         <br>
-        <button id="send" class="rot-bu rot-bu-two">Send</button>
-        <button id="sco" class="rot-bu rot-bu-two">Scroll Up</button>
+        <div class='del'><button id="send" class="rot-bu rot-bu-two">Send</button></div>
+        
     </div>
-    <button class="cool rot-bu rot-bu-two">Delete</button>
+    <div class='del'><a href="/delete"><button class="cool rot-bu rot-bu-two">Delete</button></a></div>
+    
 </div>
 <script>
 var socket = io();
@@ -67,7 +70,12 @@ dan.onscroll = function (e) {
 $(".chatbox").scroll(function(event){chk_scroll(event)});
     $("#send").click(() => {
         if ($("#message").val() == "") {
-            alert("Message cannot be blank!")
+          $.toast({
+              heading: 'Error',
+              text: 'Cannot be blank!',
+              showHideTransition: 'fade',
+              icon: 'error'
+          })
         } else {
             sendMessage({
                 name: $("#name").val(),
@@ -103,17 +111,6 @@ $(".chatbox").scroll(function(event){chk_scroll(event)});
     //     }
     //     position = scroll;
     // });
-    $(".cool").click(() => {
-        sendMessage({
-            name: "Admin",
-            message: "Messages have been deleted"
-        });
-        alert("Admin has deleted the messages. Please log in again. Thank you.")
-        location.reload();
-        deleteMessages()
-
-    })
-
 
     getMessages()
 })
@@ -137,10 +134,6 @@ function sendMessage(message) {
 
 }
 
-function deleteMessages() {
-    $.get('/delete')
-
-}
 
 function submitPoll() {
     document.getElementById("send").disabled = true;

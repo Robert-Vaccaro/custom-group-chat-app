@@ -35,82 +35,113 @@
     <button class="cool rot-bu rot-bu-two">Delete</button>
 </div>
 <script>
-
-   var socket = io();
-   var input = document.getElementById("message");
+var socket = io();
+var input = document.getElementById("message");
 // Execute a function when the user releases a key on the keyboard
 input.addEventListener("keyup", function(event) {
-  // Number 13 is the "Enter" key on the keyboard
-  if (event.keyCode === 13) {
-    document.getElementById("send").click();
-    
-    // Cancel the default action, if needed
-    event.preventDefault();
-    // Trigger the button element with a click
-  }
-});
-    $(() => {
-        $("#send").click(()=>{
-            if ($("#message").val() == ""){
-              alert("Message cannot be blank!")
-            } else{
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        document.getElementById("send").click();
 
-            sendMessage({name: $("#name").val(), message: $("#message").val()});
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+    }
+});
+
+$(() => {
+
+    $('.chatbox').bind('scroll', chk_scroll);
+    $("#send").click(() => {
+        if ($("#message").val() == "") {
+            alert("Message cannot be blank!")
+        } else {
+            sendMessage({
+                name: $("#name").val(),
+                message: $("#message").val()
+            });
             $("#message").val("");
             submitPoll();
-            }
-        })
-        var position = $(window).scrollTop(); 
-
-        // should start at 0
-
-        $(".chatbox").scroll(function() {
-            var scroll = $(".chatbox").scrollTop();
-            if(scroll > position) {
-              let intStop = setInterval(function(){
-          $('#messages').animate({
-              scrollTop: $('#messages')[0].scrollHeight
-            }, 800);},1000);
-            } else {
-                console.log('scrollUp');
-                clearInterval(intStop)
-            }
-            position = scroll;
-        });
-
-        $(".cool").click(()=>{
-            sendMessage({name: "Admin", message: "Messages have been deleted"});
-            alert("Admin has deleted the messages. Please log in again. Thank you.")
-            location.reload();
-            deleteMessages()
-
-        })
-        getMessages()
+            $('#messages').animate({
+            scrollTop: $('#messages')[0].scrollHeight
+        }, 800);
+        }
     })
+    var position = $(window).scrollTop();
 
-    socket.on('message', addMessages)
+    // should start at 0
+
+    $(".chatbox").scroll(function() {
+        var scroll = $(".chatbox").scrollTop();
+        if (scroll < position) {
+          console.log('up')
+          clearInterval(window.value) 
+
+        } else {
+
+          console.log('down')
+
+        }
+        position = scroll;
+    });
+    $(".cool").click(() => {
+        sendMessage({
+            name: "Admin",
+            message: "Messages have been deleted"
+        });
+        alert("Admin has deleted the messages. Please log in again. Thank you.")
+        location.reload();
+        deleteMessages()
+
+    })
     
-    function addMessages(message){
-        $("#messages").append(`<h4> ${message.name} </h4> <p> ${message.message} </p>`)
-    }
+   
 
-    function getMessages(){
-      $.get('/messages', (data) => {
+    getMessages()
+})
+
+socket.on('message', addMessages)
+
+function addMessages(message) {
+    $("#messages").append(`<h4> ${message.name} </h4> <p> ${message.message} </p>`)
+}
+
+function getMessages() {
+    $.get('/messages', (data) => {
         data.forEach(addMessages);
-      })
-    }
+    })
+}
 
-    function sendMessage(message){
-      $.post('/messages', message)
-    }
-    function deleteMessages(){
-      $.get('/delete')
-      
-    }
-    function submitPoll(){
-      document.getElementById("send").disabled = true;
-      setTimeout(function(){document.getElementById("send").disabled = false;},1000);
-  }
+function sendMessage(message) {
+    $.post('/messages', message)
+}
+
+function deleteMessages() {
+    $.get('/delete')
+
+}
+
+function submitPoll() {
+    document.getElementById("send").disabled = true;
+    setTimeout(function() {
+        document.getElementById("send").disabled = false;
+    }, 1000);
+}
+function chk_scroll(e) {
+    var elem = $(e.currentTarget);
+
+    if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
+      window.value = setInterval(function() {
+        $('#messages').animate({
+            scrollTop: $('#messages')[0].scrollHeight
+        }, 800);
+    }, 1000);
+    console.log("interval engaged")
+    }else{
+      console.log("interval cleared")
+      clearInterval(window.value)
+      }
+}
 </script>
 </body>
 </html>

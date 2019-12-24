@@ -62,7 +62,6 @@ $(() => {
             });
             $("#message").val("");
             submitPoll();
-            clearInterval(window.value);
             $('#messages').animate({
             scrollTop: $('#messages')[0].scrollHeight
         }, 800);
@@ -75,8 +74,9 @@ $(() => {
     $(".chatbox").scroll(function() {
         var scroll = $(".chatbox").scrollTop();
         if (scroll < position) {
-          console.log('up')
           clearInterval(window.value) 
+          console.log('up')
+          
 
         } else {
 

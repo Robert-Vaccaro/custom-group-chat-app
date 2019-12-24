@@ -69,7 +69,7 @@ io.on('connection', () =>{
   console.log('a user is connected')
 })
 
-mongoose.connect(dbUrl,{ useNewUrlParser: true } ,(err) => {
+mongoose.connect('mongodb+srv://bob:123@chat-data-7tbxu.mongodb.net/test?retryWrites=true&w=majority',{ useNewUrlParser: true } ,(err) => {
   console.log('mongodb connected',err);
 })
 

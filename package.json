@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "Robert Vaccaro",
   "license": "ISC",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "dotenv": "^8.2.0",

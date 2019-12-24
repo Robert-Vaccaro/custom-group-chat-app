@@ -31,6 +31,7 @@
         <textarea id = "message" class="form-control" placeholder="Your Message Here"></textarea>
         <br>
         <button id="send" class="rot-bu rot-bu-two">Send</button>
+        <button id="sco" class="rot-bu rot-bu-two">Scroll Up</button>
     </div>
     <button class="cool rot-bu rot-bu-two">Delete</button>
 </div>
@@ -51,7 +52,19 @@ input.addEventListener("keyup", function(event) {
 
 $(() => {
 
-    $('.chatbox').bind('scroll', chk_scroll);
+  let dan = document.getElementById('messages');
+dan.onscroll = function (e) {
+  if(e.isTrusted==true){
+    clearInterval(window.value)
+    console.log('down')
+  }
+  else{
+
+    console.log('up')
+
+  }
+}
+$(".chatbox").scroll(function(event){chk_scroll(event)});
     $("#send").click(() => {
         if ($("#message").val() == "") {
             alert("Message cannot be blank!")
@@ -62,29 +75,34 @@ $(() => {
             });
             $("#message").val("");
             submitPoll();
-            $('#messages').animate({
+            
+        $('#messages').animate({
             scrollTop: $('#messages')[0].scrollHeight
         }, 800);
         }
     })
-    var position = $(window).scrollTop();
+    // var position = $(window).scrollTop();
 
-    // should start at 0
+    // // should start at 0
 
-    $(".chatbox").scroll(function() {
-        var scroll = $(".chatbox").scrollTop();
-        if (scroll < position) {
-          clearInterval(window.value) 
-          console.log('up')
-          
+    // $(".chatbox").scroll(function() {
+    //     var scroll = $(".chatbox").scrollTop();
+    //     if (scroll < position) {
+    //       clearInterval(window.value)
+    //       console.log('up')
+    //       break
 
-        } else {
+    //     } else {
+    //       window.value = setInterval(function() {
+    //     $('#messages').animate({
+    //         scrollTop: $('#messages')[0].scrollHeight
+    //     }, 800);
+    // }, 1000);
+    //       console.log('down')
 
-          console.log('down')
-
-        }
-        position = scroll;
-    });
+    //     }
+    //     position = scroll;
+    // });
     $(".cool").click(() => {
         sendMessage({
             name: "Admin",
@@ -95,8 +113,7 @@ $(() => {
         deleteMessages()
 
     })
-    
-   
+
 
     getMessages()
 })
@@ -104,17 +121,20 @@ $(() => {
 socket.on('message', addMessages)
 
 function addMessages(message) {
-    $("#messages").append(`<h4> ${message.name} </h4> <p> ${message.message} </p>`)
+    $("#messages").append(`<h4> ${message.name} </h4> <p> ${message.message} </p>`);
 }
 
 function getMessages() {
     $.get('/messages', (data) => {
         data.forEach(addMessages);
     })
+    
+
 }
 
 function sendMessage(message) {
     $.post('/messages', message)
+
 }
 
 function deleteMessages() {
@@ -128,9 +148,9 @@ function submitPoll() {
         document.getElementById("send").disabled = false;
     }, 1000);
 }
+
 function chk_scroll(e) {
     var elem = $(e.currentTarget);
-
     if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
       window.value = setInterval(function() {
         $('#messages').animate({
@@ -138,11 +158,16 @@ function chk_scroll(e) {
         }, 800);
     }, 1000);
     console.log("interval engaged")
-    }else{
-      console.log("interval cleared")
-      clearInterval(window.value)
+    
+    } if (elem[0].scrollHeight - elem.scrollTop() != elem.outerHeight()) {
+      console.log("interval is there")
+
+    } else{
+      console.log("interval is nope")
       }
 }
+
+
 </script>
 </body>
 </html>

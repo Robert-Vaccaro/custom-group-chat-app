@@ -62,6 +62,7 @@ $(() => {
             });
             $("#message").val("");
             submitPoll();
+            clearInterval(window.value);
             $('#messages').animate({
             scrollTop: $('#messages')[0].scrollHeight
         }, 800);

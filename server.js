@@ -1,10 +1,11 @@
+require('dotenv').config();
 var express = require('express');
 var bodyParser = require('body-parser')
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongoose = require('mongoose');
-require('dotenv').config();
+
 
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
@@ -15,7 +16,7 @@ var Message = mongoose.model('Message',{
   message : String,
 })
 
-var dbUrl = process.env.KEY;
+var dbUrl = 'mongodb+srv://bob:123@chat-data-7tbxu.mongodb.net/test?retryWrites=true&w=majority';
 
 app.get('/messages', (req, res) => {
   Message.find({},(err, messages)=> {

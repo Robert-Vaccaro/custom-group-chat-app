@@ -73,6 +73,4 @@ mongoose.connect('mongodb+srv://bob:123@chat-data-7tbxu.mongodb.net/test?retryWr
   console.log('mongodb connected',err);
 })
 
-var server = http.listen(3000, () => {
-  console.log('server is running on port', server.address().port);
-});
+var server = http.listen(process.env.PORT || 3000)

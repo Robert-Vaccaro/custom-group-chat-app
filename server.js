@@ -18,7 +18,7 @@ var Message = mongoose.model('Message',{
 app.get("/", ()=>{
   console.log("hello")
 })
-var dbUrl = 'mongodb+srv://bob:123@chat-data-7tbxu.mongodb.net/test?retryWrites=true&w=majority';
+var dbUrl = process.env.KEY;
 
 app.get('/messages', (req, res) => {
   Message.find({},(err, messages)=> {
@@ -71,7 +71,7 @@ io.on('connection', () =>{
   console.log('a user is connected')
 })
 
-mongoose.connect('mongodb+srv://bob:123@chat-data-7tbxu.mongodb.net/test?retryWrites=true&w=majority',{ useNewUrlParser: true } ,(err) => {
+mongoose.connect(dbUrl,{ useNewUrlParser: true } ,(err) => {
   console.log('mongodb connected',err);
 })
 
